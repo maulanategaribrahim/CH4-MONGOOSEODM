@@ -1,0 +1,65 @@
+[
+    {
+      "_id": "65fda5aa995735a9b96149b1",
+      "name": "Concetta Moore",
+      "email": "concettamoore@zentime.com",
+      "role": "user",
+      "active": true,
+      "photo": "user-5.jpg",
+      "password": ""
+    },
+    {
+      "_id": "65fda5aab3fedac11eeafca0",
+      "name": "Perkins Boone",
+      "email": "perkinsboone@zentime.com",
+      "role": "admin",
+      "active": false,
+      "photo": "user-4.jpg",
+      "password": ""
+    },
+    {
+      "_id": "65fda5aa47bc6769f8f0c041",
+      "name": "Norton Jimenez",
+      "email": "nortonjimenez@zentime.com",
+      "role": "admin",
+      "active": false,
+      "photo": "user-3.jpg",
+      "password": ""
+    },
+    {
+      "_id": "65fda5aa00fec9433d7b0bec",
+      "name": "Shaffer Webb",
+      "email": "shafferwebb@zentime.com",
+      "role": "user",
+      "active": true,
+      "photo": "user-2.jpg",
+      "password": ""
+    },
+    {
+      "_id": "65fda5aac7b3a4564479b8a3",
+      "name": "Merritt Powers",
+      "email": "merrittpowers@zentime.com",
+      "role": "admin",
+      "active": true,
+      "photo": "user-4.jpg",
+      "password": ""
+    },
+    {
+      "_id": "65fda5aa74757dd249fc2ead",
+      "name": "Middleton Stanton",
+      "email": "middletonstanton@zentime.com",
+      "role": "admin",
+      "active": false,
+      "photo": "user-1.jpg",
+      "password": ""
+    },
+    {
+      "_id": "65fda5aa7a51b2cccef2378c",
+      "name": "Higgins Flynn",
+      "email": "higginsflynn@zentime.com",
+      "role": "user",
+      "active": false,
+      "photo": "user-5.jpg",
+      "password": ""
+    }
+  ]
