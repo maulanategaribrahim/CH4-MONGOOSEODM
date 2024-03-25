@@ -1,10 +1,16 @@
 const fs = require("fs");
-const Customer = require('../models/customerModel')
-// read file json nya
+const Customer = require("./../models/customerModel")
+
 const getCustomers = async (req, res, next) => {
-  console.log(req.requestTime);
   try {
-    const customers = await Customer.find();
+    const queryObject = { ...req.query }
+
+    const excludedColumn = ['page', 'sort', 'limit', 'field']
+    excludedColumn.forEach(el => delete queryObject[el])
+
+    console.log(req.query, queryObject)
+
+    const customers = await Customer.find(queryObject)
 
     res.status(200).json({
       status: "success",
@@ -17,21 +23,15 @@ const getCustomers = async (req, res, next) => {
   } catch (err) {
     res.status(400).json({
       status: "fail",
-      message: err.message
-    })
+      message: err.message,
+    });
   }
 };
 
 const getCustomerById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const customer = await Customer.findById(id); // Menggunakan findById() untuk mencari data berdasarkan ID
-    if (!customer) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Data tidak ditemukan"
-      });
-    }
+    const customer = await Customer.findById(id)
     res.status(200).json({
       status: "success",
       data: {
@@ -42,10 +42,9 @@ const getCustomerById = async (req, res, next) => {
     res.status(400).json({
       status: "fail",
       message: err.message
-    });
+    })
   }
-}
-
+};
 
 const updateCustomer = async (req, res) => {
   try {
@@ -70,10 +69,10 @@ const updateCustomer = async (req, res) => {
 };
 
 const deleteCustomer = async (req, res) => {
-  try{
+  try {
     const id = req.params.id;
 
-    const customer = await Customer.findByIdAndDelete(id)
+    await Customer.findByIdAndDelete(id);
 
     res.status(200).json({
       status: "success",
@@ -85,14 +84,9 @@ const deleteCustomer = async (req, res) => {
       message: err.message
     })
   }
-}
+};
 
 const createCustomer = async (req, res) => {
-  // console.log(req.body);
-
-  // //const newCustomer = req.body;
-
-  // //asychsorunuse
   try {
     const newCustomer = await Customer.create(req.body);
 
