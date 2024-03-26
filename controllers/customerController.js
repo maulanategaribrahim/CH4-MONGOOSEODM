@@ -3,6 +3,7 @@ const Customer = require("./../models/customerModel")
 
 const getCustomers = async (req, res, next) => {
   try {
+    //1. basic filter
     const queryObject = { ...req.query }
 
     const excludedColumn = ['page', 'sort', 'limit', 'field']
@@ -10,7 +11,47 @@ const getCustomers = async (req, res, next) => {
 
     console.log(req.query, queryObject)
 
-    const customers = await Customer.find(queryObject)
+    //2. advance filter
+
+    let queryStr = JSON.stringify(queryObject)
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match  => `$${match}`) // = > $gt, $gte, $lte
+    queryStr = JSON.parse(queryStr)
+
+    let query =  Customer.find(queryStr)
+
+    //3. sorting
+    //sorting ASCENDING = NAME, kalau DESCENDING = (-)PAKE -
+    if (req.query.sort){
+      const sortBy = req.query.sort.split(',').join(' ')
+      console.log(sortBy)
+      query = query.sort(sortBy)
+    }else{
+      query = query.sort('-createdAt')
+    }
+
+    //field limiting
+    if (req.query.field){
+      const field = req.query.field.split(',').join(' ')
+      query = query.select (field);
+    }else{
+      query = query.select('-__v')
+    }
+
+    //5 pagination
+    //page= 3&liimit=2 ===> data ke 5 dan 6
+    const page = req.query.page * 1  || 1;
+    const limit = req.query.limit * 1 || 2
+    const skip = (page -1 )* limit
+    query = query.skip(skip).limit(limit)
+
+  
+    if(req.query.page){
+      const numCustomers = await Customer.countDocuments()
+      if(skip > numCustomers) throw new Error("Page does not exits")
+    }
+
+    // esksekusi query
+    const customers = await query
 
     res.status(200).json({
       status: "success",
